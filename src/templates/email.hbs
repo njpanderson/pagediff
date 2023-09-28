@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="color-scheme" content="only">
+		<style>
+			body, p {
+				font-family: sans-serif;
+			}
+
+			pre {
+				margin: 0;
+			}
+
+			a {
+				color: inherit;
+			}
+
+			.diff-type {
+				text-align: center;
+				vertical-align: top;
+				font-weight: bold;
+			}
+
+			pre {
+				color: gray;
+			}
+
+			.diff-type--remove,
+			.diff-type--remove pre {
+				color: red;
+			}
+
+			.diff-type--add,
+			.diff-type--add pre {
+				color: green;
+			}
+
+			.highlight {
+				display: inline-block;
+				border-radius: 3px;
+				padding: 1px 3px;
+				background-color: rgba(231, 190, 10, 0.847);
+				color: #333 !important;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			<b>{{numChanges}}</b> changes detected in
+			{{#if pageLink }}
+				<b><a href="{{pageLink}}">{{pageTitle}}</a></b>
+			{{^}}
+				<b>{{pageTitle}}</b>
+			{{/if}}
+			<span> / </span>
+			<b>{{selectorTitle}}</b>!
+		</p>
+
+		<table>
+			<tbody>
+				{{#each changes}}
+					<tr>
+						<td class="diff-type diff-type--{{typeClass}}">{{type}}</td>
+						<td class="diff-line diff-type--{{typeClass}}"><pre>{{#each line}}{{#if highlight}}<span class="highlight">{{value}}</span>{{^}}{{value}}{{/if}}{{/each}}</pre></td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+
+		<p>Regards,<br/>PageDiff</p>
+	</body>
+</html>

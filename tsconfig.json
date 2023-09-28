@@ -1,0 +1,24 @@
+{
+  "ts-node": {
+      // https://github.com/TypeStrong/ts-node#paths-and-baseurl
+      "require": ["tsconfig-paths/register"]
+  },
+  "compilerOptions": {
+    "outDir": "./dist",
+    "strict": true,
+    "allowJs": true,
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@lib/*": ["lib/*"],
+      "@transport/*": ["lib/transport/*"],
+      "@contracts/*": ["contracts/*"]
+    },
+    "esModuleInterop": true
+  },
+  "include": ["./src", "./pages"],
+}
