@@ -2,10 +2,11 @@ import { JSDOM } from 'jsdom';
 //import { fetchUrl } from 'fetch';
 import axios from 'axios';
 
+import output from '@lib/utils/output';
 import Transport from '@contracts/Transport';
 import Cache from '@contracts/Cache';
 import HttpTransportOptions from './options/HttpTransportOptions';
-import cache from '@lib/cache';
+import cache from '@lib/utils/cache';
 import { sleep } from '@lib/utils';
 import TransportResponse from '@contracts/TransportResponse';
 
@@ -96,12 +97,12 @@ export default class Http implements Transport {
 				this.options.forceCachedCopy &&
 				(cached = this.cache.getKey(cacheId))
 			) {
-				console.log(`Using forced cached copy for ${cacheId}...`);
+				output.write(`Using forced cached copy for ${cacheId}...`);
 				return resolve(cached);
 			}
 
 			if (delay) {
-				console.log(`HTTP sleeping for ${delay / 1000}s`);
+				output.write(`HTTP sleeping for ${delay / 1000}s`);
 				await sleep(delay);
 			}
 

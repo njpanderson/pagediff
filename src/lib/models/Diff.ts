@@ -36,13 +36,6 @@ export default class Diff {
 
 			let newValue;
 
-			// console.log('------  CHANGE  -------');
-			// console.log(`Index: ${index}; prev: ${index -1},${index}; next: ${index + 1},${index + 2}`);
-			// console.log('prevChanged', prevChanged, `(Has content: ${prev !== undefined})`);
-			// console.log(change);
-			// console.log('changed', changed, 'nextChanged', nextChanged, `(Has content: ${next !== undefined})`);
-			// console.log('------END CHANGE-------');
-
 			if (!changed && change.value) {
 				// This hunk hasn't changed - split and reduce it depending on previous/next change
 				const hunkValue = change.value.split('\n');

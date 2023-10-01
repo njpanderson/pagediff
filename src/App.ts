@@ -1,25 +1,22 @@
 import * as path from 'path';
-import minimist from 'minimist';
 import { glob } from 'glob';
 
+import config from '@lib/utils/config';
+import output from '@lib/utils/output';
 import PageDefinition from '@contracts/PageDefinition';
 import Collector from '@lib/Collector';
 
 export default class App {
 	private collector: Collector|undefined;
 
-	private args: any;
-
-	constructor(args: any) {
-		this.args = this.parseArgs(args);
-
-		if (this.args === null) {
+	constructor() {
+		if (config.isEmpty() || config.has('help')) {
 			// Short circuit to help
 			this.writeHelp();
 			return;
 		}
 
-		this.collector = new Collector(this.args.reporter);
+		this.collector = new Collector(config.get('reporter'));
 
 		this.parsePages()
 			.then(this.run.bind(this));
@@ -33,33 +30,21 @@ export default class App {
 			'Arguments:',
 			' -h --help          Show this help.',
 			' --in <path>        Path to find page definitions in js/ts format.',
-			' --reporter [cli]   Reporter to use. Choose between: email, cli.'
+			' --reporter [cli]   Reporter to use. Choose between: email, cli.',
+			' -v                 Use verbose mode (will write output)'
 		].join('\n'));
-	}
-
-	parseArgs(args: any): object|null {
-		args = minimist(args);
-
-		if (!args.in || (args.h || args.help))
-			return null;
-
-		if (args.in)
-			args.in = path.resolve(args.in);
-
-		return args;
-
 	}
 
 	async parsePages() {
 		const files = await glob('**/*.{ts,js}', {
-			cwd: this.args.in
+			cwd: config.get('in')
 		});
 
 		const pageDefinitions: Array<PageDefinition> = [];
 
 		files.forEach((file: string) => {
 			pageDefinitions.push(
-				require(path.join(this.args.in, file)).default
+				require(path.join(config.get('in'), file)).default
 			);
 		});
 

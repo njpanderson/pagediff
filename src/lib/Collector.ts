@@ -2,10 +2,11 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 import { diffLines } from 'diff';
 import { dump as dumpYaml } from 'js-yaml';
 
+import output from '@lib/utils/output';
 import PageDefinition from '@contracts/PageDefinition';
 import Cache from '@contracts/Cache';
 import Reporter from '@contracts/Reporter';
-import cache from '@lib/cache';
+import cache from '@lib/utils/cache';
 import Diff from './models/Diff';
 
 // Transports
@@ -52,13 +53,13 @@ export default class Collector {
 		const reports: Array<any> = [];
 
 		if (!(page = this.pages.splice(0, 1)[0])) {
-			console.log('\nNo pages left. All done!');
+			output.write('\nNo pages left. All done!');
 			return;
 		}
 
 		const reporter = this.getReporterInstance(page);
 
-		console.log(`\nRunning page ${page.title}...`);
+		output.write(`\nRunning page ${page.title}...`);
 
 		const transport = new transports[page.transport.type](
 			page.transport.options
@@ -99,7 +100,7 @@ export default class Collector {
 						))
 					);
 
-					console.log(`${elements.length} deltas found for selector ${
+					output.write(`${elements.length} deltas found for selector ${
 						pageSelector.title
 					} (page ${response.page}).`);
 				}
@@ -130,7 +131,7 @@ export default class Collector {
 			reports.push(reporter.report(page, pageSelector, new Diff(diff)));
 
 			return Promise.all(reports).then(() => {
-				console.log('\nReports all run!');
+				output.write('\nReports all run!');
 				this.run();
 			});
 		});

@@ -8,7 +8,7 @@
     "url": "https://github.com/njpanderson/pagediff"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "TS_NODE_PROJECT=./ ts-node src/index.ts --in ./pages --reporter cli"
   },
   "keywords": [],
   "author": "",

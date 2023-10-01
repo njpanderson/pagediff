@@ -1,6 +1,5 @@
 {
   "ts-node": {
-      // https://github.com/TypeStrong/ts-node#paths-and-baseurl
       "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
@@ -20,5 +19,5 @@
     },
     "esModuleInterop": true
   },
-  "include": ["./src", "./pages"],
+  "include": ["./src", "./pages"]
 }
